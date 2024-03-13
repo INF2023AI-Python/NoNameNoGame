@@ -48,7 +48,6 @@ class Spaceship(pygame.sprite.Sprite):
 
     def update(self):
         speed = 8
-        shootingSpeed = 500
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and self.rect.left > 1:
             self.rect.x -=speed
@@ -60,7 +59,7 @@ class Spaceship(pygame.sprite.Sprite):
             self.rect.x +=speed
         #shoot
         for event in pygame.event.get():
-            if event.type == pygame.JOYBUTTONDOWN and event.button ==3 :
+            if event.type == pygame.JOYBUTTONDOWN and event.button == 3:
                 bullet = Bullets(self.rect.centerx, self.rect.top)
                 bullet_group.add(bullet)
                 
