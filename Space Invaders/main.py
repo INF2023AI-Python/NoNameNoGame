@@ -80,8 +80,6 @@ class Bullets(pygame.sprite.Sprite):
         self.image = pygame.image.load('NoNameNoGame/Space Invaders/png/bullet.png')
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
-
-
     def update(self):
         self.rect.y -= 5
         if self.rect.bottom < 0:
@@ -167,7 +165,9 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 3:
+                bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
+                bullet_group.add(bullet)
 
 
     spaceship.update()
