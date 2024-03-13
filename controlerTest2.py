@@ -32,7 +32,7 @@ def main():
                     print("right")
                 if joystick.get_axis(1) > 0.9:
                     print("up")
-                elif joystick.get_axis(0) == -1:
+                elif joystick.get_axis(1) == -1:
                     print("down")
             elif event.type == JOYBUTTONDOWN:
                 print("Taste {} gedrückt".format(event.button))
