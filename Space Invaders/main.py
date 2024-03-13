@@ -9,8 +9,8 @@ clock= pygame.time.Clock()
 running= True
 
 #variables
-rows = 5
-collumns =5
+rows = 4
+collumns =9
 alienCooldown= 1000
 lastAlienShot = pygame.time.get_ticks()
 spaceshipSize = 60
@@ -22,11 +22,17 @@ black= (0,0,0)
 red = (255,0,0)
 green= (0,255,0)
 
+# Initialisieren des Gamepads
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
+
+
 #background
-sideWidth = (windowWidth - windowHeight) // 2
 centerImage = pygame.image.load('Space Invaders/png/bg.png')
 imageHeight = windowHeight
-centerImage = pygame.transform.scale(centerImage, (imageHeight, imageHeight))
+centerImage = pygame.transform.scale(centerImage, (windowWidth,windowHeight))
 
 
 #spaceship
@@ -44,9 +50,13 @@ class Spaceship(pygame.sprite.Sprite):
         speed = 8
         shootingSpeed = 500
         key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT] and self.rect.left > sideWidth:
+        if key[pygame.K_LEFT] and self.rect.left:
             self.rect.x -=speed
-        if key[pygame.K_RIGHT] and self.rect.right < (windowWidth-sideWidth):
+        if key[pygame.K_RIGHT] and self.rect.right < windowWidth:
+            self.rect.x +=speed
+        if joystick.get_axis(0) > 0.9:
+            self.rect.x -=speed
+        elif joystick.get_axis(0) == -1:
             self.rect.x +=speed
         #shoot
         timeNow = pygame.time.get_ticks()
@@ -127,7 +137,7 @@ alien_bullet_group= pygame.sprite.Group()
 def create_aliens():
     for row in range(rows):
         for item in range(collumns):
-            alien = Aliens(sideWidth+ 105 + item * 100, 50+row * 60)
+            alien = Aliens(115 + item * 100, 70+row * 70)
             alien.image = pygame.transform.scale(alien.image, (35, 35)) 
             alien_group.add(alien)
 create_aliens()
@@ -143,10 +153,9 @@ spaceship_group.add(spaceship)
 
 while running:
 
-    screen.fill((0,0,0))
-    pygame.draw.rect(screen, black, (0, 0, sideWidth, windowHeight)) 
-    pygame.draw.rect(screen, black, (windowWidth - sideWidth, 0, sideWidth, windowHeight)) 
-    screen.blit(centerImage, ((windowWidth - imageHeight) // 2, (windowHeight - imageHeight) // 2))
+    
+    
+    screen.blit(centerImage, (0, 0))
     
 
     timeNow = pygame.time.get_ticks()
