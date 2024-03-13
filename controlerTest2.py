@@ -26,10 +26,14 @@ def main():
             if event.type == QUIT:
                 running = False
             elif event.type == JOYAXISMOTION:
-                 if joystick.get_axis(0) == 1:
-                    print("up")
+                if joystick.get_axis(0) < 0.9:
+                    print("left")
                 elif joystick.get_axis(0) == -1:
                     print("right")
+                if joystick.get_axis(1) < 0.9:
+                    print("up")
+                elif joystick.get_axis(0) == -1:
+                    print("down")
             elif event.type == JOYBUTTONDOWN:
                 print("Taste {} gedrückt".format(event.button))
             elif event.type == JOYBUTTONUP:
