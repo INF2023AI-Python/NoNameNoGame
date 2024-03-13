@@ -28,6 +28,9 @@ while True:
     elif joystick.get_button(9):
         print("START")  
     elif joystick.get_axis(0):
-        print("OK")
+        if joystick.get_axis(0) == 1:
+            print("up")
+        elif joystick.getaxis(0) == -1:
+            print("down")
     elif joystick.get_axis(1):
         print("TEST")
