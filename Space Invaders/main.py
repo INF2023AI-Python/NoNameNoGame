@@ -50,20 +50,20 @@ class Spaceship(pygame.sprite.Sprite):
         speed = 8
         shootingSpeed = 500
         key = pygame.key.get_pressed()
-        if key[pygame.K_LEFT] and self.rect.left > 0:
+        if key[pygame.K_LEFT] and self.rect.left > 1:
             self.rect.x -=speed
         if key[pygame.K_RIGHT] and self.rect.right < windowWidth:
             self.rect.x +=speed
-        if joystick.get_axis(0) > 0.9 and self.rect.left > 0:
+        if joystick.get_axis(0) > 0.9 and self.rect.left > 1:
             self.rect.x -=speed
         elif joystick.get_axis(0) == -1 and self.rect.right < windowWidth:
             self.rect.x +=speed
         #shoot
-        timeNow = pygame.time.get_ticks()
-        if key[pygame.K_SPACE] and timeNow - self.lastShot > shootingSpeed:
-            bullet = Bullets(self.rect.centerx, self.rect.top)
-            bullet_group.add(bullet)
-            self.lastShot = timeNow
+        for event in pygame.event.get():
+            if event.type == pygame.JOYBUTTONDOWN and event.button ==3 :
+                bullet = Bullets(self.rect.centerx, self.rect.top)
+                bullet_group.add(bullet)
+                
         #mask
         self.mask = pygame.mask.from_surface(self.image)
         #health bar
