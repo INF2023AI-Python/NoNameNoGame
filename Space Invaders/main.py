@@ -22,12 +22,19 @@ alienCooldown= 1000
 lastAlienShot = pygame.time.get_ticks()
 spaceshipSize = 60
 numberHealth = 3
+countdown = 3
+lastCount = pygame.time.get_ticks()
+gameOver = 0
 
+#fonds
+font30 = pygame.font.SysFont('Constantia', 30)
+font40 = pygame.font.SysFont('Constantia', 40)
 
 #colors
 black= (0,0,0)
 red = (255,0,0)
 green= (0,255,0)
+white= (255,255,255)
 
 # Initialisieren des Gamepads
 pygame.joystick.init()
@@ -40,6 +47,11 @@ joystick.init()
 centerImage = pygame.image.load('png/bg.png')
 imageHeight = windowHeight
 centerImage = pygame.transform.scale(centerImage, (windowWidth,windowHeight))
+
+#text
+def draw_text(text, font, textColor, x, y):
+    img = font.render(text, True, textColor)
+    screen.blit(img, (x, y))
 
 
 #spaceship
@@ -55,6 +67,7 @@ class Spaceship(pygame.sprite.Sprite):
 
     def update(self):
         speed = 8
+        gameOver = 0
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] and self.rect.left > 1:
             self.rect.x -=speed
@@ -72,10 +85,15 @@ class Spaceship(pygame.sprite.Sprite):
                 
         #mask
         self.mask = pygame.mask.from_surface(self.image)
+
         #health bar
         pygame.draw.rect(screen, red, (self.rect.x, (self.rect.bottom + 5), (self.rect.width - 13), 15))
         if self.healthRemaining > 0:
             pygame.draw.rect(screen, green, (self.rect.x, (self.rect.bottom + 5), int((self.rect.width - 13)*(self.healthRemaining / self.healthStart)), 15))
+        elif self.healthRemaining <= 0:
+            self.kill()
+            gameOver = -1
+        return gameOver
             
 
 
@@ -92,6 +110,8 @@ class Bullets(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
         if pygame.sprite.spritecollide(self, alien_group, True):
+            self.kill()
+        if gameOver != 0:
             self.kill()
             
 
@@ -128,7 +148,8 @@ class AlienBullets(pygame.sprite.Sprite):
         if pygame.sprite.spritecollide(self,spaceship_group, False, pygame.sprite.collide_mask):
             self.kill()
             spaceship.healthRemaining -= 1
-            
+        if gameOver != 0:
+            self.kill()    
 
 
 #groups
@@ -160,33 +181,54 @@ while running:
     
     
     screen.blit(centerImage, (0, 0))
-    
-
-    timeNow = pygame.time.get_ticks()
-    if timeNow - lastAlienShot > alienCooldown and len(alien_bullet_group) < 5 and len(alien_group) > 0:
-        shootingAlien = random.choice(alien_group.sprites())
-        alienBullet = AlienBullets(shootingAlien.rect.centerx, shootingAlien.rect.bottom)
-        alien_bullet_group.add(alienBullet)
-        lastAlienShot = timeNow
-    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.JOYBUTTONDOWN and event.button == 3:
-                bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
-                bullet_group.add(bullet)
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 and countdown == 0 and gameOver == 0:
+            bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
+            bullet_group.add(bullet)
 
+    if countdown == 0:
 
-    spaceship.update()
+        timeNow = pygame.time.get_ticks()
+        if timeNow - lastAlienShot > alienCooldown and len(alien_bullet_group) < 5 and len(alien_group) > 0 and gameOver == 0:
+            shootingAlien = random.choice(alien_group.sprites())
+            alienBullet = AlienBullets(shootingAlien.rect.centerx, shootingAlien.rect.bottom)
+            alien_bullet_group.add(alienBullet)
+            lastAlienShot = timeNow
 
-    bullet_group.update()
-    alien_group.update()
-    alien_bullet_group.update()
+        if len(alien_group) == 0:
+            gameOver = 1
+        
+        if gameOver == 0:
+            gameOver = spaceship.update()
+            bullet_group.update()
+            alien_group.update()
+            alien_bullet_group.update()
+        else: 
+            if gameOver == -1:
+                draw_text('GAMER OVER!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+            if gameOver == 1:
+                draw_text('YOU WIN!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+
+    if countdown > 0:
+        draw_text('SPACE INVADERS', font40, white, int(windowWidth / 2 - 150 ), int(windowHeight / 2 + 50))
+        draw_text(str(countdown), font40, white, int(windowWidth / 2 - 10 ), int(windowHeight / 2 + 100))
+        countTimer = pygame.time.get_ticks()
+        if countTimer - lastCount > 1000:
+            countdown -= 1
+            lastCount =countTimer
 
     spaceship_group.draw(screen)
     bullet_group.draw(screen)
     alien_group.draw(screen)
     alien_bullet_group.draw(screen)
+
+
+
+    
+       
+
 
     pygame.display.flip()
     clock.tick(60)
