@@ -1,12 +1,19 @@
 import pygame
 import random
+import os
 
 pygame.init()
 windowWidth = 1024
 windowHeight = 600
-screen= pygame.display.set_mode((windowWidth, windowHeight), pygame.FULLSCREEN)
+screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
 clock= pygame.time.Clock()
 running= True
+
+
+#path
+python_file_path = os.path.abspath(__file__)
+python_file_directory = os.path.dirname(python_file_path)
+os.chdir(python_file_directory)
 
 #variables
 rows = 4
@@ -30,7 +37,7 @@ joystick.init()
 
 
 #background
-centerImage = pygame.image.load('NoNameNoGame/Space Invaders/png/bg.png')
+centerImage = pygame.image.load('png/bg.png')
 imageHeight = windowHeight
 centerImage = pygame.transform.scale(centerImage, (windowWidth,windowHeight))
 
@@ -39,7 +46,7 @@ centerImage = pygame.transform.scale(centerImage, (windowWidth,windowHeight))
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self, x, y, health):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('NoNameNoGame/Space Invaders/png/spaceship.png')
+        self.image = pygame.image.load('png/spaceship.png')
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
         self.lastShot = pygame.time.get_ticks()
@@ -77,7 +84,7 @@ class Spaceship(pygame.sprite.Sprite):
 class Bullets(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('NoNameNoGame/Space Invaders/png/bullet.png')
+        self.image = pygame.image.load('png/bullet.png')
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
     def update(self):
@@ -92,7 +99,7 @@ class Bullets(pygame.sprite.Sprite):
 class Aliens(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("NoNameNoGame/Space Invaders/png/alien"+ str(random.randint(1,4))+ ".png")
+        self.image = pygame.image.load("png/alien"+ str(random.randint(1,4))+ ".png")
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
         self.move_counter = 0
@@ -109,7 +116,7 @@ class Aliens(pygame.sprite.Sprite):
 class AlienBullets(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('NoNameNoGame/Space Invaders/png/alien_bullet.png')
+        self.image = pygame.image.load('png/alien_bullet.png')
         self.rect = self.image.get_rect()
         self.rect.center = [x, y]
 
