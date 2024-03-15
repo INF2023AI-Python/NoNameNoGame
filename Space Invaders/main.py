@@ -110,9 +110,7 @@ class Bullets(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
         if pygame.sprite.spritecollide(self, alien_group, True):
-            self.kill()
-        if gameOver != 0:
-            self.kill()
+            self.kill() 
             
 
 #aliens
@@ -148,8 +146,7 @@ class AlienBullets(pygame.sprite.Sprite):
         if pygame.sprite.spritecollide(self,spaceship_group, False, pygame.sprite.collide_mask):
             self.kill()
             spaceship.healthRemaining -= 1
-        if gameOver != 0:
-            self.kill()    
+    
 
 
 #groups
@@ -169,7 +166,9 @@ create_aliens()
 
 
 
-
+def destroyBullets():
+    bullet_group.empty()
+    alien_bullet_group.empty()
 
 spaceship = Spaceship(int (windowWidth /2), windowHeight-70, numberHealth)
 spaceship.image= pygame.transform.scale(spaceship.image,(spaceshipSize,spaceshipSize))
@@ -208,8 +207,11 @@ while running:
         else: 
             if gameOver == -1:
                 draw_text('GAMER OVER!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+                destroyBullets()
             if gameOver == 1:
                 draw_text('YOU WIN!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+                destroyBullets()
+                
 
     if countdown > 0:
         draw_text('SPACE INVADERS', font40, white, int(windowWidth / 2 - 150 ), int(windowHeight / 2 + 50))
