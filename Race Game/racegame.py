@@ -175,21 +175,20 @@ while run:
             run = False
             break
         
-        elif event.type == JOYAXISMOTION:
-            if joystick.get_axis(0) > 0.9:
-                print("left")
-                player_car.rotate(left=True)
-            elif joystick.get_axis(0) == -1:
-                print("right")
-                player_car.rotate(right=True)
-            if joystick.get_axis(1) > 0.9:
-                print("up")
-                moved = True
-                player_car.move_forward()
-            elif joystick.get_axis(1) == -1:
-                print("down")
-                moved = True
-                player_car.move_backward()
+        if joystick.get_axis(0) > 0.9:
+            print("left")
+            player_car.rotate(left=True)
+        elif joystick.get_axis(0) == -1:
+            print("right")
+            player_car.rotate(right=True)
+        if joystick.get_axis(1) > 0.9:
+            print("up")
+            moved = True
+            player_car.move_forward()
+        elif joystick.get_axis(1) == -1:
+            print("down")
+            moved = True
+            player_car.move_backward()
         
         if event.type == pygame.KEYDOWN:
             if joystick.get_button(0):
@@ -198,7 +197,7 @@ while run:
                 player_car.timer_started = False
                 player_car.start_time = 0
                 player_car.elapsed_time = 0
-                player_car.highscore = player_car.load_highscore()
+                #player_car.highscore = player_car.load_highscore()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
@@ -207,7 +206,7 @@ while run:
                 player_car.timer_started = False
                 player_car.start_time = 0
                 player_car.elapsed_time = 0
-                player_car.highscore = player_car.load_highscore()
+                #player_car.highscore = player_car.load_highscore()
 
     keys = pygame.key.get_pressed()
     moved = False
@@ -247,7 +246,7 @@ while run:
                 #player_car.highscore = player_car.previous_time
                 #player_car.save_highscore(player_car.highscore)  # Highscore speichern
 
-    draw(WIN, images, player_car, elapsed_time, player_car.highscore, player_car.previous_time)
+    draw(WIN, images, player_car, elapsed_time)
     player_car.sound_car()
 
 pygame.quit()
