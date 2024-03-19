@@ -98,7 +98,7 @@ class PlayerCar(AbstractCar):
     def __init__(self, max_vel, rotation_vel):
         super().__init__(max_vel, rotation_vel)
         self.sound_playing = False
-        self.max_sound_volume = 0.2
+        self.max_sound_volume = 0.1
         self.min_sound_volume = 0
         self.volume_range = self.max_sound_volume - self.min_sound_volume
         self.crossed_start_line = False
@@ -182,23 +182,23 @@ while run:
         elif joystick.get_axis(0) == -1:
             print("right")
             player_car.rotate(right=True)
-        if joystick.get_axis(1) > 0.9:
-            print("up")
+
+        
+        if joystick.get_button(1):
             moved = True
             player_car.move_forward()
-        elif joystick.get_axis(1) == -1:
-            print("down")
+        
+        if joystick.get_button(4):
             moved = True
             player_car.move_backward()
-        
-        if event.type == pygame.KEYDOWN:
-            if joystick.get_button(0):
-                player_car.reset()
-                player_car.crossed_start_line = False
-                player_car.timer_started = False
-                player_car.start_time = 0
-                player_car.elapsed_time = 0
-                player_car.highscore = player_car.load_highscore()
+
+        if joystick.get_button(0):
+            player_car.reset()
+            player_car.crossed_start_line = False
+            player_car.timer_started = False
+            player_car.start_time = 0
+            player_car.elapsed_time = 0
+            player_car.highscore = player_car.load_highscore()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
