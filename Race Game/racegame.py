@@ -105,8 +105,8 @@ class PlayerCar(AbstractCar):
         self.timer_started = False
         self.start_time = 0
         self.elapsed_time = 0
-        #self.highscore_file = "highscore.txt"
-        #self.highscore = self.load_highscore()
+        self.highscore_file = "highscore.txt"
+        self.highscore = self.load_highscore()
         self.previous_time = 0
 
     def reduce_speed(self):
@@ -197,7 +197,7 @@ while run:
                 player_car.timer_started = False
                 player_car.start_time = 0
                 player_car.elapsed_time = 0
-                #player_car.highscore = player_car.load_highscore()
+                player_car.highscore = player_car.load_highscore()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
@@ -206,7 +206,7 @@ while run:
                 player_car.timer_started = False
                 player_car.start_time = 0
                 player_car.elapsed_time = 0
-                #player_car.highscore = player_car.load_highscore()
+                player_car.highscore = player_car.load_highscore()
 
     keys = pygame.key.get_pressed()
     moved = False
@@ -242,9 +242,9 @@ while run:
             print(player_car.previous_time)
             player_car.timer_started = False
             player_car.elapsed_time = time.time() - player_car.start_time
-            #if player_car.previous_time < player_car.highscore or player_car.highscore == 0:
-                #player_car.highscore = player_car.previous_time
-                #player_car.save_highscore(player_car.highscore)  # Highscore speichern
+            if player_car.previous_time < player_car.highscore or player_car.highscore == 0:
+                player_car.highscore = player_car.previous_time
+                player_car.save_highscore(player_car.highscore)  # Highscore speichern
 
     draw(WIN, images, player_car, elapsed_time)
     player_car.sound_car()
