@@ -5,7 +5,7 @@ import os
 pygame.init()
 windowWidth = 1024
 windowHeight = 600
-screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
+screen= pygame.display.set_mode((windowWidth, windowHeight),pygame.FULLSCREEN) # pygame.FULLSCREEN
 clock= pygame.time.Clock()
 running= True
 
@@ -53,6 +53,11 @@ def draw_text(text, font, textColor, x, y):
     img = font.render(text, True, textColor)
     screen.blit(img, (x, y))
 
+def restart():
+    
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
+  
 
 #spaceship
 class Spaceship(pygame.sprite.Sprite):
