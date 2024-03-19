@@ -191,6 +191,9 @@ while running:
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 and countdown == 0 and gameOver == 0:
             bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
             bullet_group.add(bullet)
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 0:
+            restart()
+            
 
     if countdown == 0:
 
