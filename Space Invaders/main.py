@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+import sys
 
 pygame.init()
 windowWidth = 1024
