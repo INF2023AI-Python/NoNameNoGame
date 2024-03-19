@@ -14,6 +14,11 @@ joystick = pygame.joystick.Joystick(0)
 joystick.init()
 print("Gamepad gefunden:"), joystick.get_name()
 
+#path
+python_file_path = os.path.abspath(__file__)
+python_file_directory = os.path.dirname(python_file_path)
+os.chdir(python_file_directory)
+
 GRASS = pygame.image.load("Graphics/green_background.png")
 TRACK = scale_image(pygame.image.load("Graphics/racetrack.png"), 0.9)
 
@@ -93,15 +98,15 @@ class PlayerCar(AbstractCar):
     def __init__(self, max_vel, rotation_vel):
         super().__init__(max_vel, rotation_vel)
         self.sound_playing = False
-        self.max_sound_volume = 0.2
+        self.max_sound_volume = 0.1
         self.min_sound_volume = 0
         self.volume_range = self.max_sound_volume - self.min_sound_volume
         self.crossed_start_line = False
         self.timer_started = False
         self.start_time = 0
         self.elapsed_time = 0
-        #self.highscore_file = "highscore.txt"
-        #self.highscore = self.load_highscore()
+        self.highscore_file = "highscore.txt"
+        self.highscore = self.load_highscore()
         self.previous_time = 0
 
     def reduce_speed(self):
@@ -170,30 +175,30 @@ while run:
             run = False
             break
         
-        elif event.type == JOYAXISMOTION:
-            if joystick.get_axis(0) > 0.9:
-                print("left")
-                player_car.rotate(left=True)
-            elif joystick.get_axis(0) == -1:
-                print("right")
-                player_car.rotate(right=True)
-            if joystick.get_axis(1) > 0.9:
-                print("up")
-                moved = True
-                player_car.move_forward()
-            elif joystick.get_axis(1) == -1:
-                print("down")
-                moved = True
-                player_car.move_backward()
         
-        if event.type == pygame.KEYDOWN:
-            if joystick.get_button(0):
-                player_car.reset()
-                player_car.crossed_start_line = False
-                player_car.timer_started = False
-                player_car.start_time = 0
-                player_car.elapsed_time = 0
-                player_car.highscore = player_car.load_highscore()
+        if joystick.get_axis(0) > 0.9:
+            print("left")
+            player_car.rotate(left=True)
+        elif joystick.get_axis(0) == -1:
+            print("right")
+            player_car.rotate(right=True)
+
+        
+        if joystick.get_button(1):
+            moved = True
+            player_car.move_forward()
+        
+        if joystick.get_button(4):
+            moved = True
+            player_car.move_backward()
+
+        if joystick.get_button(0):
+            player_car.reset()
+            player_car.crossed_start_line = False
+            player_car.timer_started = False
+            player_car.start_time = 0
+            player_car.elapsed_time = 0
+            player_car.highscore = player_car.load_highscore()
 
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
@@ -238,9 +243,9 @@ while run:
             print(player_car.previous_time)
             player_car.timer_started = False
             player_car.elapsed_time = time.time() - player_car.start_time
-            #if player_car.previous_time < player_car.highscore or player_car.highscore == 0:
-                #player_car.highscore = player_car.previous_time
-                #player_car.save_highscore(player_car.highscore)  # Highscore speichern
+            if player_car.previous_time < player_car.highscore or player_car.highscore == 0:
+                player_car.highscore = player_car.previous_time
+                player_car.save_highscore(player_car.highscore)  # Highscore speichern
 
     draw(WIN, images, player_car, elapsed_time, player_car.highscore, player_car.previous_time)
     player_car.sound_car()
