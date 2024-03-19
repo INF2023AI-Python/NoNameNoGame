@@ -14,6 +14,11 @@ joystick = pygame.joystick.Joystick(0)
 joystick.init()
 print("Gamepad gefunden:"), joystick.get_name()
 
+#path
+python_file_path = os.path.abspath(__file__)
+python_file_directory = os.path.dirname(python_file_path)
+os.chdir(python_file_directory)
+
 GRASS = pygame.image.load("Graphics/green_background.png")
 TRACK = scale_image(pygame.image.load("Graphics/racetrack.png"), 0.9)
 
