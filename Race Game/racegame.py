@@ -175,6 +175,7 @@ while run:
             run = False
             break
         
+        
         if joystick.get_axis(0) > 0.9:
             print("left")
             player_car.rotate(left=True)
@@ -246,7 +247,7 @@ while run:
                 player_car.highscore = player_car.previous_time
                 player_car.save_highscore(player_car.highscore)  # Highscore speichern
 
-    draw(WIN, images, player_car, elapsed_time)
+    draw(WIN, images, player_car, elapsed_time, player_car.highscore, player_car.previous_time)
     player_car.sound_car()
 
 pygame.quit()
