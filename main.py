@@ -34,16 +34,16 @@ joystick.init()
 current_directory = os.path.dirname(__file__)
 
 def program1():
-    os.system("python3" + os.path.join(current_directory, "Race_Game", "racegame.py"))
+    os.system(os.path.join(current_directory, "Race_Game", "racegame.py"))
 
 def program2():
-    os.system("python3" + os.path.join(current_directory, "Space_Invaders", "Spaceinvaders.py"))
+    os.system(os.path.join(current_directory, "Space_Invaders", "Spaceinvaders.py"))
 
 def program3():
-    os.system("python3" + os.path.join(current_directory, "frogger" "frogger.py"))
+    os.system(os.path.join(current_directory, "frogger" "frogger.py"))
 
 def program4():
-    os.system("python3" + os.path.join(current_directory, "frogger" "frogger.py"))
+    os.system(os.path.join(current_directory, "frogger" "frogger.py"))
 
 
 # Schaltflächen
