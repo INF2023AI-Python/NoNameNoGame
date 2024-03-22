@@ -31,17 +31,19 @@ pygame.joystick.init()
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 
+current_directory = os.path.dirname(__file__)
+
 def program1():
-    os.system("python3 /Race_Game/racegame.py")
+    os.system("python3" + os.path.join(current_directory, "Race_Game", "racegame.py"))
 
 def program2():
-    os.system("python3 /Space_Invaders/Spaceinvaders.py")
+    os.system("python3" + os.path.join(current_directory, "Space_Invaders", "Spaceinvaders.py"))
 
 def program3():
-    os.system("python3 /frogger/frogger.py")
+    os.system("python3" + os.path.join(current_directory, "frogger" "frogger.py"))
 
 def program4():
-    os.system("python3 /frogger/frogger.py")
+    os.system("python3" + os.path.join(current_directory, "frogger" "frogger.py"))
 
 
 # Schaltflächen
@@ -74,9 +76,9 @@ while running:
             value = event.value
             if axis == 1 and abs(value) > 0.5:
                 if value < 0:
-                    selected_button = (selected_button - 1) % len(buttons)
+                    selected_button = (selected_button + 1) % len(buttons)
                 elif value > 0:
-                    selected_button = (selected_button + 1) % len(buttons) 
+                    selected_button = (selected_button - 1) % len(buttons) 
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
              buttons[selected_button][2]()
             
