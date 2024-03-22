@@ -6,7 +6,7 @@ from pygame.locals import *
 pygame.init()
 windowWidth = 1024
 windowHeight = 600
-screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
+screen= pygame.display.set_mode((windowWidth, windowHeight),pygame.FULLSCREEN) # pygame.FULLSCREEN
 running= True
 
 
@@ -36,10 +36,10 @@ def program2():
     os.system(sys.executable + " " + os.path.join(current_directory, "Space_Invaders", "Spaceinvaders.py"))
 
 def program3():
-    os.system(sys.executable + " " + os.path.join(current_directory, "frogger" "frogger.py"))
+    os.system(sys.executable + " " + os.path.join(current_directory, "frogger", "frogger.py"))
 
 def program4():
-    os.system(sys.executable + " " + os.path.join(current_directory, "frogger" "frogger.py"))
+    os.system(sys.executable + " " + os.path.join(current_directory, "frogger", "frogger.py"))
 
 
 # Schaltflächen
