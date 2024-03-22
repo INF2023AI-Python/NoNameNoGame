@@ -10,9 +10,9 @@ screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
 running= True
 
 #path
-python_file_path = os.path.abspath(__file__)
-python_file_directory = os.path.dirname(python_file_path)
-os.chdir(python_file_directory)
+#python_file_path = os.path.abspath(__file__)
+#python_file_directory = os.path.dirname(python_file_path)
+#os.chdir(python_file_directory)
 
 #fonds
 font = pygame.font.SysFont('Constantia', 30)
