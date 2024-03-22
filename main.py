@@ -9,10 +9,6 @@ windowHeight = 600
 screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
 running= True
 
-#path
-#python_file_path = os.path.abspath(__file__)
-#python_file_directory = os.path.dirname(python_file_path)
-#os.chdir(python_file_directory)
 
 #fonds
 font = pygame.font.SysFont('Constantia', 30)
@@ -47,11 +43,11 @@ def program4():
 
 
 # Schaltflächen
-button_width, button_height = 200, 50
+button_width, button_height = 300, 70
 button_padding = 20
 
 buttons = []
-button_texts = ["Programm 1", "Programm 2", "Programm 3", "Programm 4"]
+button_texts = ["Rennspiel", "Space Invaders", "Froggers", "Schach"]
 button_functions = [program1, program2, program3, program4]
 selected_button = 0
 
@@ -85,7 +81,7 @@ while running:
         
     screen.fill(black)  
             
-    text = font.render("Hauptmenü", True, white)
+    text = font.render("NoNameNoGame", True, white)
     text_rect = text.get_rect(center=(windowWidth // 2, 100))
     screen.blit(text, text_rect)
 
