@@ -8,7 +8,7 @@ import time
 pygame.init()
 windowWidth = 1024
 windowHeight = 600
-screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
+screen= pygame.display.set_mode((windowWidth, windowHeight), pygame.FULLSCREEN) # pygame.FULLSCREEN
 clock= pygame.time.Clock()
 running= True
 
@@ -222,7 +222,7 @@ selected_button = 0
 
 for i, text in enumerate(button_texts):
     button_x = (windowWidth - button_width) // 2
-    button_y = 150 + i * (button_height + button_padding)
+    button_y = 200 + i * (button_height + button_padding)
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
     buttons.append((button_rect, text, button_functions[i]))
 
