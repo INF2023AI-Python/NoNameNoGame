@@ -28,6 +28,9 @@ numberHealth = 3
 countdown = 3
 lastCount = pygame.time.get_ticks()
 gameOver = 0
+gameOverTime = pygame.time.get_ticks()
+gameOverTimeSet = 0
+
 
 #fonds
 font30 = pygame.font.SysFont('Constantia', 30)
@@ -60,9 +63,25 @@ def draw_text(text, font, textColor, x, y):
 
 def restart():
     
-    python = sys.executable
-    os.execl(python, python, *sys.argv)
+    
+    global numberHealth, gameOver, gameOverTimeSet, countdown
+    numberHealth = 3
+    gameOver = 0
+    gameOverTimeSet = 0
+    countdown = 4
+    spaceship_position = (int (windowWidth /2), windowHeight-70)
+    spaceship.image= pygame.transform.scale(spaceship.image,(spaceshipSize,spaceshipSize))
+    spaceship_group.add(spaceship)
+    destroyBullets()  # Zerstört vorhandene Projektile
+    clearScreen()  # Entfernt vorhandene Aliens
+    create_aliens()  # Erstellt neue Aliens
+    spaceship.healthRemaining = numberHealth  # Setzt die Lebenspunkte des Raumschiffs zurück
+    spaceship.rect.center = spaceship_position  # Stellt die Position des Raumschiffs wieder her
+    spaceship_group.add(spaceship)
   
+def mainMenu():
+    pygame.quit()
+
 
 #spaceship
 class Spaceship(pygame.sprite.Sprite):
@@ -102,8 +121,8 @@ class Spaceship(pygame.sprite.Sprite):
             pygame.draw.rect(screen, green, (self.rect.x, (self.rect.bottom + 5), int((self.rect.width - 13)*(self.healthRemaining / self.healthStart)), 15))
         elif self.healthRemaining <= 0:
             self.kill()
-            spaceship_group.empty()
             gameOver = -1
+            pygame.draw.rect(screen, red, (self.rect.x, (self.rect.bottom + 5), (self.rect.width - 13), 15))
         return gameOver
             
 
@@ -197,7 +216,7 @@ button_padding = 20
 
 buttons = []
 button_texts = ["Play again", "Main menu"]
-button_functions = [restart, restart]
+button_functions = [restart, mainMenu]
 selected_button = 0
 
 
@@ -207,6 +226,18 @@ for i, text in enumerate(button_texts):
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
     buttons.append((button_rect, text, button_functions[i]))
 
+
+def endScreen():
+    clearScreen()
+    screen.fill(black)
+    for i, button in enumerate(buttons):
+        if i == selected_button:
+            pygame.draw.rect(screen, blue, button[0])
+        else:
+            pygame.draw.rect(screen, gray, button[0])
+        text = font30.render(button[1], True, white)
+        text_rect = text.get_rect(center=button[0].center)
+        screen.blit(text, text_rect)
 
 
 while running:
@@ -221,8 +252,20 @@ while running:
             bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
             bullet_group.add(bullet)
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 0:
-            restart()
-        
+             restart()
+        elif event.type == JOYAXISMOTION:
+                axis = event.axis
+                value = event.value
+                if axis == 1 and abs(value) > 0.5:
+                    if value < 0:
+                        print ("1")
+                        selected_button = (selected_button + 1) % len(buttons)
+                    elif value > 0:
+                        print ("2")
+                        selected_button = (selected_button - 1) % len(buttons) 
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
+                if gameOver != 0:
+                    buttons[selected_button][2]()
             
 
     if countdown == 0:
@@ -247,31 +290,17 @@ while running:
                 draw_text('GAME OVER!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
                 destroyBullets()
             if gameOver == 1:
-                draw_text('YOU WIN!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+                draw_text('YOU WIN!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2))
                 destroyBullets()
+                clearScreen()
+            if gameOverTimeSet == 0:
+                gameOverTime = pygame.time.get_ticks()
+                gameOverTimeSet = 1
+                selected_button = 0
+            elif pygame.time.get_ticks() - gameOverTime > 5000:
+                endScreen()   
             
-            time.sleep(5)
-            if event.type == JOYAXISMOTION:
-                axis = event.axis
-                value = event.value
-                if axis == 1 and abs(value) > 0.5:
-                    if value < 0:
-                        print("test")
-                        selected_button = (selected_button + 1) % len(buttons)
-                    elif value > 0:
-                        selected_button = (selected_button - 1) % len(buttons) 
-            elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
-                buttons[selected_button][2]()
-            clearScreen()
-            screen.fill(black)
-            for i, button in enumerate(buttons):
-                if i == selected_button:
-                    pygame.draw.rect(screen, blue, button[0])
-                else:
-                    pygame.draw.rect(screen, gray, button[0])
-                text = font30.render(button[1], True, white)
-                text_rect = text.get_rect(center=button[0].center)
-                screen.blit(text, text_rect)
+            
                
 
     if countdown > 0:
