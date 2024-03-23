@@ -1,12 +1,14 @@
 import pygame
+from pygame.locals import *
 import random
 import os
 import sys
+import time
 
 pygame.init()
 windowWidth = 1024
 windowHeight = 600
-screen= pygame.display.set_mode((windowWidth, windowHeight),pygame.FULLSCREEN) # pygame.FULLSCREEN
+screen= pygame.display.set_mode((windowWidth, windowHeight)) # pygame.FULLSCREEN
 clock= pygame.time.Clock()
 running= True
 
@@ -36,6 +38,8 @@ black= (0,0,0)
 red = (255,0,0)
 green= (0,255,0)
 white= (255,255,255)
+blue= (0,0,255)
+gray= (200,200,200)
 
 # Initialisieren des Gamepads
 pygame.joystick.init()
@@ -98,6 +102,7 @@ class Spaceship(pygame.sprite.Sprite):
             pygame.draw.rect(screen, green, (self.rect.x, (self.rect.bottom + 5), int((self.rect.width - 13)*(self.healthRemaining / self.healthStart)), 15))
         elif self.healthRemaining <= 0:
             self.kill()
+            spaceship_group.empty()
             gameOver = -1
         return gameOver
             
@@ -176,9 +181,32 @@ def destroyBullets():
     bullet_group.empty()
     alien_bullet_group.empty()
 
+
+def clearScreen():
+    alien_group.empty()
+    spaceship_group.empty()
+
+
 spaceship = Spaceship(int (windowWidth /2), windowHeight-70, numberHealth)
 spaceship.image= pygame.transform.scale(spaceship.image,(spaceshipSize,spaceshipSize))
 spaceship_group.add(spaceship)
+
+
+button_width, button_height = 300, 70
+button_padding = 20
+
+buttons = []
+button_texts = ["Play again", "Main menu"]
+button_functions = [restart, restart]
+selected_button = 0
+
+
+for i, text in enumerate(button_texts):
+    button_x = (windowWidth - button_width) // 2
+    button_y = 150 + i * (button_height + button_padding)
+    button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
+    buttons.append((button_rect, text, button_functions[i]))
+
 
 
 while running:
@@ -194,6 +222,7 @@ while running:
             bullet_group.add(bullet)
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 0:
             restart()
+        
             
 
     if countdown == 0:
@@ -215,12 +244,35 @@ while running:
             alien_bullet_group.update()
         else: 
             if gameOver == -1:
-                draw_text('GAMER OVER!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
+                draw_text('GAME OVER!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
                 destroyBullets()
             if gameOver == 1:
                 draw_text('YOU WIN!', font40, white, int(windowWidth / 2 - 100 ), int(windowHeight / 2 + 50))
                 destroyBullets()
-                
+            
+            time.sleep(5)
+            if event.type == JOYAXISMOTION:
+                axis = event.axis
+                value = event.value
+                if axis == 1 and abs(value) > 0.5:
+                    if value < 0:
+                        print("test")
+                        selected_button = (selected_button + 1) % len(buttons)
+                    elif value > 0:
+                        selected_button = (selected_button - 1) % len(buttons) 
+            elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
+                buttons[selected_button][2]()
+            clearScreen()
+            screen.fill(black)
+            for i, button in enumerate(buttons):
+                if i == selected_button:
+                    pygame.draw.rect(screen, blue, button[0])
+                else:
+                    pygame.draw.rect(screen, gray, button[0])
+                text = font30.render(button[1], True, white)
+                text_rect = text.get_rect(center=button[0].center)
+                screen.blit(text, text_rect)
+               
 
     if countdown > 0:
         draw_text('SPACE INVADERS', font40, white, int(windowWidth / 2 - 150 ), int(windowHeight / 2 + 50))
