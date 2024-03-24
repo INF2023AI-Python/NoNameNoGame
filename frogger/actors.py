@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import random
 
 import pygame
@@ -53,7 +51,7 @@ class Frog(Rectangle):
 		super(Frog, self).__init__(x, y, w, w)
 		self.x0 = x
 		self.y0 = y
-		self.color = (34, 177, 76)
+		self.color = (43, 106, 64)
 		self.attached = None
 
 	def reset(self):
@@ -114,7 +112,7 @@ class Lane(Rectangle):
 		self.obstacles = []
 		offset = 0#random.uniform(0, 200)
 		if self.type == 'car':
-			o_color = (128, 128, 128)
+			o_color = (166, 44, 43)
 		if self.type == 'log':
 			o_color = (185, 122, 87)
 		for i in range(n):

@@ -1,6 +1,3 @@
-#!/usr/bin/python3
-
-
 import random
 
 import pygame
@@ -42,21 +39,24 @@ class App:
 
 		self.lanes = []
 		self.lanes.append( Lane( 1, c=( 50, 192, 122) ) )
-		self.lanes.append(Lane(2, t='log', c=(153, 217, 234), n=4, l=2, spc=350, spd=4.2))
+		self.lanes.append(Lane(2, t='log', c=(153, 217, 234), n=4, l=1, spc=350, spd=4.2))
 		self.lanes.append( Lane( 3, t='log', c=(153, 217, 234), n=3, l=3, spc=200, spd=-1.8) )
-		self.lanes.append( Lane( 4, t='log', c=(153, 217, 234), n=3, l=4, spc=400, spd=1.6) )
+		self.lanes.append( Lane( 4, t='log', c=(153, 217, 234), n=3, l=4, spc=800, spd=1.6) )
 		self.lanes.append( Lane( 5, t='log', c=(153, 217, 234), n=2, l=3, spc=400, spd=-2) )
 		self.lanes.append( Lane( 6, c=(50, 192, 122) ) )
 		self.lanes.append( Lane( 7, c=(50, 192, 122) ) )
-		self.lanes.append( Lane( 8, t='car', c=(195, 195, 195), n=3, l=2, spc=300, spd=-2) )
-		self.lanes.append( Lane( 9, t='car', c=(195, 195, 195), n=6, l=4, spc=240, spd=-1) )
-		self.lanes.append( Lane( 10, t='car', c=(195, 195, 195), n=5, l=2, spc=190, spd=2.5) )
-		self.lanes.append( Lane( 11, t='car', c=(195, 195, 195), n=3, l=3, spc=100, spd=5) )
+		self.lanes.append( Lane( 8, t='car', c=(195, 195, 195), n=10, l=3, spc=300, spd=-2) )
+		self.lanes.append( Lane( 9, t='car', c=(195, 195, 195), n=5, l=4, spc=400, spd=-1) )
+		self.lanes.append( Lane( 10, t='car', c=(195, 195, 195), n=6, l=2, spc=190, spd=2.5) )
+		self.lanes.append( Lane( 11, t='car', c=(195, 195, 195), n=2, l=5, spc=800, spd=6) )
 		self.lanes.append( Lane( 12, c=(50, 192, 122) ) )
 
 	def event(self, event):
 		if event.type == QUIT:
 			self.running = False
+
+		if event.type == KEYDOWN and event.key == K_e:
+			self.running = False	
 
 		if event.type == KEYDOWN and event.key == K_ESCAPE:
 			self.running = False
@@ -105,6 +105,7 @@ class App:
 
 			self.draw_text("Frogger!", g_vars['width']/2, g_vars['height']/2 - 15, 'center')
 			self.draw_text("Press ENTER to start playing.", g_vars['width']/2, g_vars['height']/2 + 15, 'center')
+			self.draw_text("Press E to go back to main menu", g_vars['width']/2, g_vars['height']/2 + 40, 'center')
 
 		if self.state == 'PLAYING':
 
