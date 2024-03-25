@@ -396,10 +396,10 @@ while run:
                 value = event.value
                 if axis == 0 and abs(value) > 0.5:
                     if value < 0:
-                        if x_select > 0:
+                        if x_select < 525:
                             x_select += 75
                     elif value > 0:
-                         if x_select < 525:
+                         if x_select > 0:
                             x_select -= 75
                 if axis ==1 and abs(value) > 0.5:
                     if value < 0:
