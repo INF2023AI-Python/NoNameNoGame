@@ -362,8 +362,8 @@ def menu():
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 110])
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Press RED to play again!!', True, 'white'), (210, 240))
-    screen.blit(font.render(f'Press RED to play again!', True, 'white'), (210, 270))
+    screen.blit(font.render(f'Press GREEN to play again!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Press RED to get in the game overlay!', True, 'white'), (210, 270))
 
 
 black_options = check_options(black_pieces, black_locations, 'black')
