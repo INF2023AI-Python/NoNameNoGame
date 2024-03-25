@@ -10,7 +10,7 @@ pygame.joystick.init()
 if pygame.joystick.get_count() == 0:
     print("Kein Gamepad gefunden.")
 
-joystick = pygame.joystick.Joystick(0)    
+joystick = pygame.joystick.Joystick(0)     
 joystick.init()
 print("Gamepad gefunden:"), joystick.get_name()
 
