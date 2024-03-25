@@ -361,7 +361,7 @@ def menu():
 
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 110])
-    screen.blit(font.render(f'{winner} hat das Spiel gewonnen!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     screen.blit(font.render(f'Press RED to play again!!', True, 'white'), (210, 240))
     screen.blit(font.render(f'Press RED to play again!', True, 'white'), (210, 270))
 
@@ -423,7 +423,7 @@ while run:
                     click_coords = (x_coord, y_coord)
                     if turn_step <= 1:
                         if click_coords == (8, 8) or click_coords == (9, 8):
-                            winner = 'Schwarz'
+                            winner = 'Black'
                         if click_coords in white_locations:
                             selection = white_locations.index(click_coords)
                             if turn_step == 0:
@@ -434,7 +434,7 @@ while run:
                                 black_piece = black_locations.index(click_coords)
                                 captured_pieces_white.append(black_pieces[black_piece])
                                 if black_pieces[black_piece] == 'king':
-                                    winner = 'Weiß'
+                                    winner = 'White'
                                 black_pieces.pop(black_piece)
                                 black_locations.pop(black_piece)
                             black_options = check_options(black_pieces, black_locations, 'black')
@@ -446,7 +446,7 @@ while run:
                             valid_moves = []
                     if turn_step > 1:
                         if click_coords == (8, 8) or click_coords == (9, 8):
-                            winner = 'Weiß'
+                            winner = 'White'
                         if click_coords in black_locations:
                             selection = black_locations.index(click_coords)
                             if turn_step == 2:
@@ -457,7 +457,7 @@ while run:
                                 white_piece = white_locations.index(click_coords)
                                 captured_pieces_black.append(white_pieces[white_piece])
                                 if white_pieces[white_piece] == 'king':
-                                    winner = 'Schwarz'
+                                    winner = 'Black'
                                 white_pieces.pop(white_piece)
                                 white_locations.pop(white_piece)
                             black_options = check_options(black_pieces, black_locations, 'black')
