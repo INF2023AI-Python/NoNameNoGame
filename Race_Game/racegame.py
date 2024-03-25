@@ -38,7 +38,7 @@ CRASH_SOUND = pygame.mixer.Sound("Sounds/crash_sound.mp3")
 sound_playing = False
 
 WIDTH, HEIGHT = TRACK.get_width(), TRACK.get_height()
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("Racing Game")
 
 FPS = 60

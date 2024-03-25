@@ -1,17 +1,24 @@
 
 import pygame
 import sys
+import os
 
 pygame.init()
 WIDTH = 1024
 HEIGHT = 600
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
+screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.FULLSCREEN)
 pygame.display.set_caption('Schachspiel')
 font = pygame.font.Font('freesansbold.ttf', 20)
 medium_font = pygame.font.Font('freesansbold.ttf', 40)
 big_font = pygame.font.Font('freesansbold.ttf', 30)
 timer = pygame.time.Clock()
 fps = 60
+
+#path
+python_file_path = os.path.abspath(__file__)
+python_file_directory = os.path.dirname(python_file_path)
+os.chdir(python_file_directory)
+
 
 white_pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook',
                  'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']

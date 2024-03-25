@@ -11,7 +11,7 @@ g_vars['width'] = 1024
 g_vars['height'] = 600
 g_vars['fps'] = 30
 g_vars['grid'] = 44
-g_vars['window'] = pygame.display.set_mode( [g_vars['width'], g_vars['height']], pygame.HWSURFACE)
+g_vars['window'] = pygame.display.set_mode( [g_vars['width'], g_vars['height']], pygame.FULLSCREEN)
 
 
 class App:
