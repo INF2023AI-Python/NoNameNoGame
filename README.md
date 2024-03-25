@@ -24,13 +24,15 @@ Press the green button to start the game
 ### Space Invader
 
 How to Play:
-
++ Use the Joystick to move the space ship around
++ It is like you would expect it - left=left, right=right
 
 ### Frogger
 
 
 How to Play:
-
++ Use the Joystick to move the rectangle around
++ It is like you would expect it - top = up, bottom = down, left=left, right=right
 
 ### Racing Game
 
