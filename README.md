@@ -15,7 +15,21 @@
   git clone https://github.com/INF2023AI-Python/Fun-with-Friends.git](https://github.com/INF2023AI-Python/NoNameNoGame.git
   ```
 ### 5. Set-up for Autostart
++ Make sure the file is executeable
+  ```
+  chmod +x /path/to/main.py
+  ```
+  
++ Edit the "rc.local" file
+  
+  ```
+  sudo nano /etc/rc.local
+  ```
 
++ Add the following command to the "rc.local" file
+  ```
+  python3 /home/pi/main.py &
+  ```
 
 ## Game description
 ### Start Screen
