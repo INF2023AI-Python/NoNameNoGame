@@ -1,36 +1,43 @@
 import pygame
-from pygame.locals import *
+import sys
 
+# Initialisiere Pygame
 pygame.init()
 
+# Initialisiere den Joystick
+pygame.joystick.init()
+
+# Überprüfe, ob ein Joystick angeschlossen ist
+if pygame.joystick.get_count() == 0:
+    print("Kein Joystick gefunden.")
+    sys.exit()
+
+# Hole den ersten Joystick
 joystick = pygame.joystick.Joystick(0)
+joystick.init()
 
+# Gebe Informationen zum Joystick aus
+print(f"Joystick-Name: {joystick.get_name()}")
+print(f"Anzahl der Achsen: {joystick.get_numaxes()}")
+print(f"Anzahl der Tasten: {joystick.get_numbuttons()}")
+
+# Hauptschleife
 while True:
-    for event in pygame.event.get(): # get the events (update the joystick)
-        if event.type == QUIT: # allow to click on the X button to close the window
+    for event in pygame.event.get():
+        if event.type == pygame.JOYAXISMOTION:
+            # Bewegung der Joystick-Achse
+            achse = event.axis
+            wert = event.value
+            print(f"Achse {achse}: {wert:.2f}")
+        elif event.type == pygame.JOYBUTTONDOWN:
+            # Tastendruck am Joystick
+            taste = event.button
+            print(f"Taste {taste} gedrückt")
+        elif event.type == pygame.JOYBUTTONUP:
+            # Tastenfreigabe am Joystick
+            taste = event.button
+            print(f"Taste {taste} losgelassen")
+        elif event.type == pygame.QUIT:
+            # Beende das Programm
             pygame.quit()
-            exit()
-
-    if joystick.get_button(0):
-        print("X")
-    elif joystick.get_button(1):
-        print("A")
-    elif joystick.get_button(2):
-        print("B")
-    elif joystick.get_button(3):
-        print("Y")
-    elif joystick.get_button(4):
-        print("left")
-    elif joystick.get_button(5):
-        print("right")
-    elif joystick.get_button(8):
-        print("SELECT")
-    elif joystick.get_button(9):
-        print("START")  
-    elif joystick.get_axis(0):
-        if joystick.get_axis(0) == 1:
-            print("up")
-        elif joystick.get_axis(0) == -1:
-            print("right")
-    elif joystick.get_axis(1):
-        print("TEST")
+            sys.exit()

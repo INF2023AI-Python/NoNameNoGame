@@ -14,31 +14,35 @@ joystick = pygame.joystick.Joystick(0)
 joystick.init()
 print("Gamepad gefunden:"), joystick.get_name()
 
-#path
+# Pfad
 python_file_path = os.path.abspath(__file__)
 python_file_directory = os.path.dirname(python_file_path)
 os.chdir(python_file_directory)
 
+# Laden der Bilder
 GRASS = pygame.image.load("Graphics/green_background.png")
 TRACK = scale_image(pygame.image.load("Graphics/racetrack.png"), 0.9)
-
 TRACK_BOARDER = scale_image(pygame.image.load("Graphics/boarder.png"), 0.9)
 TRACK_BOARDER_MASK = pygame.mask.from_surface(TRACK_BOARDER)
 FINISH = pygame.image.load("Graphics/finish.png")
-FINISH_MASK = pygame.mask.from_surface(FINISH)
 FINISH_POSITION = (0, -52)
 
+# Autos
 RED_CAR = scale_image(pygame.image.load("Graphics/car_red.png"), 0.04)
-GREEN_CAR = pygame.image.load("Graphics/car_green.png")
 
+MAX_SPEED = 4
+MAX_ROTATION = 6
 pygame.mixer.init()
 ENGINE_SOUND = pygame.mixer.Sound("Sounds/car_sound.mp3")
 CRASH_SOUND = pygame.mixer.Sound("Sounds/crash_sound.mp3")
 
+start_cooldown = 0.5
 sound_playing = False
+collision_cooldown = 2.0  # Zeit in Sekunden für den Cooldown nach Kollision
+last_collision_time = 0.0  # Zeitstempel der letzten Kollision
 
 WIDTH, HEIGHT = TRACK.get_width(), TRACK.get_height()
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+WIN = pygame.display.set_mode((WIDTH, HEIGHT), pygame.FULLSCREEN)
 pygame.display.set_caption("Racing Game")
 
 FPS = 60
@@ -101,22 +105,18 @@ class PlayerCar(AbstractCar):
         self.max_sound_volume = 0.1
         self.min_sound_volume = 0
         self.volume_range = self.max_sound_volume - self.min_sound_volume
-        self.crossed_start_line = False
-        self.timer_started = False
-        self.start_time = 0
-        self.elapsed_time = 0
-        self.highscore_file = "highscore.txt"
-        self.highscore = self.load_highscore()
-        self.previous_time = 0
-
+       
     def reduce_speed(self):
         self.vel = max(self.vel - self.acceleration/2, 0)
         self.move()
 
     def bounce(self):
+        global last_collision_time
+        if time.time() - last_collision_time > collision_cooldown:
+            CRASH_SOUND.play()
+            last_collision_time = time.time()
         self.vel = -self.vel
         self.move()
-        CRASH_SOUND.play()
 
     def sound_car(self):
         global sound_playing
@@ -129,86 +129,51 @@ class PlayerCar(AbstractCar):
         volume = self.min_sound_volume + volume_factor * self.volume_range
         ENGINE_SOUND.set_volume(volume)
 
-    def load_highscore(self):
-        if os.path.exists(self.highscore_file):
-            with open(self.highscore_file, 'r') as f:
-                try:
-                    return float(f.read())
-                except ValueError:
-                    return 0
-        else:
-            return 0
-
-    def save_highscore(self, score):
-        with open(self.highscore_file, 'w') as f:
-            f.write(str(score))
-
-def draw(win, images, player_car, elapsed_time, highscore, previous_time):
+def draw(win, images, player_car):
     for img, pos in images:
         win.blit(img, pos)
 
     player_car.draw(win)
-    font = pygame.font.Font(None, 36)
-    text_time = font.render("Elapsed Time: {:.2f} Sekunden".format(elapsed_time), True, (255, 255, 255))
-    text_highscore = font.render("Highscore: {:.2f} Sekunden".format(highscore), True, (255, 255, 255))
-    text_previous_time = font.render("Previous Time: {:.2f} Sekunden".format(previous_time), True, (255, 255, 255))
-    win.blit(text_time, (10, 10))
-    win.blit(text_highscore, (10, 50))
-    win.blit(text_previous_time, (10, 90))
     pygame.display.update()
 
 run = True
 clock = pygame.time.Clock()
 images = [(GRASS, (0, 0)), (TRACK, (0, 0)), (FINISH, FINISH_POSITION), (TRACK_BOARDER, (0, 0))]
-player_car = PlayerCar(8, 8)
+player_car = PlayerCar(MAX_SPEED, MAX_ROTATION)
 
 while run:
     clock.tick(FPS)
 
     elapsed_time = 0
-    if player_car.timer_started:
-        player_car.previous_time = player_car.elapsed_time
-        elapsed_time = time.time() - player_car.start_time
 
+    # Ereignisschleife
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
             break
-        
-        
-        if joystick.get_axis(0) > 0.9:
-            print("left")
-            player_car.rotate(left=True)
-        elif joystick.get_axis(0) == -1:
-            print("right")
-            player_car.rotate(right=True)
-
-        
-        if joystick.get_button(1):
-            moved = True
-            player_car.move_forward()
-        
-        if joystick.get_button(4):
-            moved = True
-            player_car.move_backward()
-
-        if joystick.get_button(0):
-            player_car.reset()
-            player_car.crossed_start_line = False
-            player_car.timer_started = False
-            player_car.start_time = 0
-            player_car.elapsed_time = 0
-            player_car.highscore = player_car.load_highscore()
-
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
                 player_car.reset()
-                player_car.crossed_start_line = False
-                player_car.timer_started = False
-                player_car.start_time = 0
-                player_car.elapsed_time = 0
-                player_car.highscore = player_car.load_highscore()
+        
+    # Steuerung des Autos
+    if joystick.get_axis(0) > 0.9:
+        player_car.rotate(right=True)
+    elif joystick.get_axis(0) == -1:
+        player_car.rotate(left=True)
+        
+    if joystick.get_button(1):
+        moved = True
+        player_car.move_forward()
+        
+    if joystick.get_button(2):
+        moved = True
+        player_car.move_backward()
 
+    if joystick.get_button(3):
+        player_car.reset()
+
+    if joystick.get_button(0):
+        pygame.quit()
     keys = pygame.key.get_pressed()
     moved = False
 
@@ -227,27 +192,11 @@ while run:
         player_car.reduce_speed()
         moved = False
 
+    # Kollision mit der Streckenbegrenzung
     if player_car.collide(TRACK_BOARDER_MASK) is not None:
-        player_car.bounce()
-
-    if player_car.x < 545:
-        player_car.crossed_start_line = False
-
-    if 545 <= player_car.x <= 570 and 350 <= player_car.y <= 500:
-        if not player_car.crossed_start_line:
-            player_car.crossed_start_line = True
-            player_car.timer_started = True
-            player_car.start_time = time.time()
-        elif player_car.crossed_start_line and player_car.x > 570:
-            player_car.previous_time = player_car.elapsed_time
-            print(player_car.previous_time)
-            player_car.timer_started = False
-            player_car.elapsed_time = time.time() - player_car.start_time
-            if player_car.previous_time < player_car.highscore or player_car.highscore == 0:
-                player_car.highscore = player_car.previous_time
-                player_car.save_highscore(player_car.highscore)  # Highscore speichern
-
-    draw(WIN, images, player_car, elapsed_time, player_car.highscore, player_car.previous_time)
+        player_car.bounce()      
+    
+    # Zeichnen des Bildschirms
+    draw(WIN, images, player_car)
     player_car.sound_car()
 
-pygame.quit()
