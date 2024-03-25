@@ -418,7 +418,7 @@ while run:
                 if joystick.get_button(0):
                     menu_open = 1
                 
-                elif joystick.get_button(1):
+                elif joystick.get_button(3):
                     x_coord = x_select // 75
                     y_coord = y_select // 75
                     click_coords = (x_coord, y_coord)
