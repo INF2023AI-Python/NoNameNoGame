@@ -4,6 +4,8 @@
 + Hardware: Raspberry Pi 5, Dispay 1023x600, Joystick an 6 Buttons
 + Choose Storage e.g. 32 GB SD-Card
 
+![console](https://github.com/INF2023AI-Python/NoNameNoGame/assets/158037983/2a140b00-0486-47b8-b097-e428eeb822d8)
+
 ### Install Python3
 
 https://www.python.org/downloads/
@@ -41,6 +43,7 @@ PvP Chess Game without en passant, castling and pawn promotion
 
 How to Play:
 Use the Joystick to move the rectangle around
+It is like you would expect it - top = up, bottom = down, left=left, right=right
 Use the Green Button to select a piece an the destination
 Use the Red Button to exit the game
 
