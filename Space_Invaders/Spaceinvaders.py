@@ -252,6 +252,8 @@ while running:
             bullet = Bullets(spaceship.rect.centerx, spaceship.rect.top)
             bullet_group.add(bullet)
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 0:
+             mainMenu
+        elif event.type == pygame.JOYBUTTONDOWN and event.button == 1:
              restart()
         elif event.type == JOYAXISMOTION:
                 axis = event.axis
