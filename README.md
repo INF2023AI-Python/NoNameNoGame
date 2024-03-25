@@ -26,6 +26,7 @@ Press the green button to start the game
 How to Play:
 + Use the Joystick to move the space ship around
 + It is like you would expect it - left=left, right=right
++ Press the Green Button to shoot
 
 ### Frogger
 
