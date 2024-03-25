@@ -406,8 +406,7 @@ while run:
                             y_select += 75
                     elif value > 0:
                          if y_select > 0:
-                            y_select -= 75
-                            #ccccc    
+                            y_select -= 75  
         elif not game_over:
             if menu_open == 1:
                 if joystick.get_button(0):
