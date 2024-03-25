@@ -44,15 +44,19 @@ How to Play:
 
 ### Frogger
 
-
+Cross the street without touching the cars and use the logs to cross the water.
 How to Play:
 + Use the Joystick to move the rectangle around
 + It is like you would expect it - top = up, bottom = down, left=left, right=right
 
 ### Racing Game
 
-
+Small racing game to improve your own racing skills. Race against the clock and beat your time or that of your friend. In the future, the previous lap and the fastest lap will also be displayed and who knows, several tracks offer even more opportunities to improve.
 How to Play:
++ Use the joystick to move the car left or right
++ Press the green button to move forward
++ Press the blue button next to the green button to move backward
++ Press the top blue button to reset the car
 
 
 ### Chess
