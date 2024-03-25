@@ -211,6 +211,8 @@ while run:
 
     if joystick.get_button(1):
         player_car.reset()
+        player_car.angle = -90
+        player_car.end_time = 0
 
     if joystick.get_button(0):
         pygame.quit()
@@ -238,27 +240,26 @@ while run:
     if player_car.collide(TRACK_BOARDER_MASK) is not None:
         player_car.bounce()
 
-    # Überprüfen, ob das Auto FINISH überquert hat
+
     if player_car.collide(pygame.mask.from_surface(FINISH), FINISH_POSITION[0], FINISH_POSITION[1]):
         if not player_car.finished:
             player_car.finished = True
             player_car.end_time = time.time()
             lap_time = player_car.end_time - lap_start_time
             print("Rundenzeit:", lap_time)
-            previous_lap_time = lap_time  # Speichern der vorherigen Rundenzeit
             lap_start_time = time.time()
         else:
             player_car.finished = False
             player_car.start_time = time.time()
 
-    # Überprüfen, ob das Auto das erste Mal die Linie überquert hat
+
     if player_car.collide(pygame.mask.from_surface(FINISH), FINISH_POSITION[0], FINISH_POSITION[1]) and not lap_started:
         lap_start_time = time.time()
         lap_started = True
         first_lap_started = True  # Die erste Runde hat begonnen
 
-    # Zeichnen des Bildschirms
-    if first_lap_started:  # Nur anzeigen, wenn die erste Runde begonnen hat
+
+    if first_lap_started:  
         draw(WIN, images, player_car, time.time() - lap_start_time)
         lap_surface = font30.render("Vorherige Rundenzeit: {:.2f}s".format(previous_lap_time), True, (255, 255, 255))
         WIN.blit(lap_surface, (10, 60))
