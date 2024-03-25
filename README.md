@@ -2,15 +2,13 @@
 # Fun-with-Friends
 
 ## Set-up
-+ Hardware: 2 gamepads, Adafruit RGB Matrix + Real Time Clock HAT 32x32, Raspberry Pi 3 Model B
++ Hardware: Raspberry Pi 5, Dispay 1023x600, Joystick an 6 Buttons
 + Choose Storage e.g. 32 GB SD-Card
 
 ### Install Python3
-  ```
-  sudo apt-get update && sudo apt-get install python3-dev python3-pillow -y
-  make build-python PYTHON=$(command -v python3)
-  sudo make install-python PYTHON=$(command -v python3)
-  ```
+
+https://www.python.org/downloads/
+
 ### 4. Install NoNameNoGame
   ```
   git clone https://github.com/INF2023AI-Python/Fun-with-Friends.git](https://github.com/INF2023AI-Python/NoNameNoGame.git
@@ -20,10 +18,10 @@
 
 ## Game description
 ### Start Screen
-Use the arrow keys to move the orange square.
-Select a game or power off by pressing the red 'A' key.
+Use the Joystick up or down to select the game 
+Press the green button to start the game
+### Space Invader
 
-### Space Invader 
 How to Play:
 
 
@@ -40,8 +38,8 @@ How to Play:
 
 
 ### Chess
+PvP Chess Game
 
-
-#### How to Play:
-
+How to Play:
+Use the Joystick
 
