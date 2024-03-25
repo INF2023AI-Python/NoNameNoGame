@@ -30,6 +30,7 @@ lastCount = pygame.time.get_ticks()
 gameOver = 0
 gameOverTime = pygame.time.get_ticks()
 gameOverTimeSet = 0
+endMenu = 0
 
 
 #fonds
@@ -264,7 +265,7 @@ while running:
                     elif value > 0:
                         selected_button = (selected_button - 1) % len(buttons) 
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
-                if gameOver != 0:
+                if endMenu == 1:
                     buttons[selected_button][2]()
             
 
@@ -298,7 +299,9 @@ while running:
                 gameOverTimeSet = 1
                 selected_button = 0
             elif pygame.time.get_ticks() - gameOverTime > 5000:
-                endScreen()   
+                endScreen()  
+                endMenu = 1
+
             
             
                
