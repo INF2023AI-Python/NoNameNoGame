@@ -128,8 +128,8 @@ class App:
 		if self.state == 'START':
 
 			self.draw_text("Frogger!", g_vars['width']/2, g_vars['height']/2 - 15, 'center')
-			self.draw_text("Press ENTER to start playing.", g_vars['width']/2, g_vars['height']/2 + 15, 'center')
-			self.draw_text("Press E to go back to main menu", g_vars['width']/2, g_vars['height']/2 + 40, 'center')
+			self.draw_text("Press GREEN to start playing.", g_vars['width']/2, g_vars['height']/2 + 15, 'center')
+			self.draw_text("Press RED to go back to main menu", g_vars['width']/2, g_vars['height']/2 + 40, 'center')
 
 		if self.state == 'PLAYING':
 

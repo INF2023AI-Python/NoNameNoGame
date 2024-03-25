@@ -355,15 +355,15 @@ def draw_check():
 
 def menu():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 70])
-    screen.blit(font.render(f'Drücke SPACE um ins Hauptmenü zu gelangen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke ENTER um Weiterzuspielen!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Drücke GRÜN um ins Hauptmenü zu gelangen!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Drücke ROT um Weiterzuspielen!', True, 'white'), (210, 240))
 
 
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 110])
     screen.blit(font.render(f'{winner} hat das Spiel gewonnen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke SPACE zum Neustart!', True, 'white'), (210, 240))
-    screen.blit(font.render(f'Drücke ENTER um ins Hauptmenü zu gelangen!', True, 'white'), (210, 270))
+    screen.blit(font.render(f'Drücke GRÜN zum Neustart!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Drücke ROT um ins Hauptmenü zu gelangen!', True, 'white'), (210, 270))
 
 
 black_options = check_options(black_pieces, black_locations, 'black')
@@ -414,7 +414,6 @@ while run:
                 if joystick.get_button(3):
                     run = False
             else:
-                print ("test")
                 if joystick.get_button(0):
                     menu_open = 1
                 
@@ -469,7 +468,7 @@ while run:
                             selection = 100
                             valid_moves = []         
         elif event.type == pygame.JOYBUTTONDOWN and game_over:
-            if event.button == 3:
+            if joystick.get_button(3):
                 game_over = False
                 winner = ''
                 white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
@@ -488,7 +487,7 @@ while run:
                 valid_moves = []
                 black_options = check_options(black_pieces, black_locations, 'black')
                 white_options = check_options(white_pieces, white_locations, 'white')
-            if event.button == 0:
+            if joystick.get_button(0):
                 run = False
     if turn_step < 2:
         pygame.draw.rect(screen, "red", (x_select, y_select, 75, 75), 5)
