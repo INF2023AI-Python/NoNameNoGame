@@ -1,7 +1,7 @@
 # NoNameNoGame
 
 ## Set-up
-+ Hardware: Raspberry Pi 5, Dispay 1023x600, Joystick an 6 Buttons
++ Hardware: Raspberry Pi 5, Dispay 1023x600, Joystick and 6 Buttons
 + Choose Storage e.g. 32 GB SD-Card
 
 ![console](https://github.com/INF2023AI-Python/NoNameNoGame/assets/158037983/2a140b00-0486-47b8-b097-e428eeb822d8)
@@ -35,8 +35,20 @@
 ### Start Screen
 Use the Joystick to select the game 
 Press the green button to start the game
+
+### Racing Game
+
+Small racing game to improve your own racing skills. Race against the clock and beat your time or that of your friend. In the future, the previous lap and the fastest lap will also be displayed and who knows, several tracks offer even more opportunities to improve.
+How to Play:
++ Use the joystick to move the car left or right
++ Press the green button to move forward
++ Press the blue button next to the green button to move backward
++ Press the top blue button to reset the car
+
+
 ### Space Invader
 
+Shoot some Alienswith your little Spaceship and try not to get shot yourself.
 How to Play:
 + Use the Joystick to move the space ship around
 + It is like you would expect it - left=left, right=right
@@ -49,14 +61,6 @@ How to Play:
 + Use the Joystick to move the rectangle around
 + It is like you would expect it - top = up, bottom = down, left=left, right=right
 
-### Racing Game
-
-Small racing game to improve your own racing skills. Race against the clock and beat your time or that of your friend. In the future, the previous lap and the fastest lap will also be displayed and who knows, several tracks offer even more opportunities to improve.
-How to Play:
-+ Use the joystick to move the car left or right
-+ Press the green button to move forward
-+ Press the blue button next to the green button to move backward
-+ Press the top blue button to reset the car
 
 
 ### Chess
