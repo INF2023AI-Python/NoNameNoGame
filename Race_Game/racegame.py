@@ -196,9 +196,9 @@ while run:
         continue  # Den Rest des Haupt-Loops überspringen, während der Countdown läuft
         
     # Steuerung des Autos nur nach Countdown-Ende
-    if joystick.get_axis(0) > 0.9:
+    if joystick.get_axis(0) < -0.9:
         player_car.rotate(right=True)
-    elif joystick.get_axis(0) == -1:
+    elif joystick.get_axis(0) > 0.9:
         player_car.rotate(left=True)
         
     if joystick.get_button(3):
