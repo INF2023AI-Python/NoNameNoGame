@@ -8,7 +8,7 @@
 
 ### Install Python3
 
-https://www.python.org/downloads/
+ > https://www.python.org/downloads/
 
 ### 4. Install NoNameNoGame
   ```
@@ -41,10 +41,10 @@ How to Play:
 ### Chess
 PvP Chess Game without en passant, castling and pawn promotion
 
-How to Play:
-Use the Joystick to move the rectangle around
-It is like you would expect it - top = up, bottom = down, left=left, right=right
-Use the Green Button to select a piece an the destination
-Use the Red Button to exit the game
+How to Play: <br>
++ Use the Joystick to move the rectangle around</li>
++ It is like you would expect it - top = up, bottom = down, left=left, right=right
++ Use the Green Button to select a piece an the destination
++ Use the Red Button to exit the game
 
 
