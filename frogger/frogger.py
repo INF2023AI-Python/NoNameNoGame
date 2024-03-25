@@ -6,12 +6,17 @@ from pygame.locals import *
 from actors import *
 
 
+# Initialisieren des Gamepads
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
 g_vars = {}
 g_vars['width'] = 1024
 g_vars['height'] = 600
 g_vars['fps'] = 30
 g_vars['grid'] = 44
-g_vars['window'] = pygame.display.set_mode( [g_vars['width'], g_vars['height']], pygame.HWSURFACE)
+g_vars['window'] = pygame.display.set_mode( [g_vars['width'], g_vars['height']], pygame.FULLSCREEN)
 
 
 class App:
@@ -61,11 +66,30 @@ class App:
 		if event.type == KEYDOWN and event.key == K_ESCAPE:
 			self.running = False
 
+		if event.type == JOYBUTTONDOWN and event.button == 0:
+			self.running = False
+
 		if self.state == 'START':
 			if event.type == KEYDOWN and event.key == K_RETURN:
 				self.state = 'PLAYING'
 
+			if event.type == JOYBUTTONDOWN and event.button == 3:
+				self.state = 'PLAYING'
+
 		if self.state == 'PLAYING':
+			if event.type == JOYAXISMOTION:
+				axis = event.axis
+				value = event.value
+				if axis == 0 and abs(value) > 0.5:
+					if value > 0:
+						self.frog.move(-1,0)
+					elif value < 0:
+						self.frog.move(1,0)
+				if axis == 1 and abs(value) > 0.5:
+					if value > 0:
+						self.frog.move(0,-1)
+					elif value < 0:
+						self.frog.move(0,1)
 			if event.type == KEYDOWN and event.key == K_LEFT:
 				self.frog.move(-1, 0)
 			if event.type == KEYDOWN and event.key == K_RIGHT:
@@ -104,8 +128,8 @@ class App:
 		if self.state == 'START':
 
 			self.draw_text("Frogger!", g_vars['width']/2, g_vars['height']/2 - 15, 'center')
-			self.draw_text("Press ENTER to start playing.", g_vars['width']/2, g_vars['height']/2 + 15, 'center')
-			self.draw_text("Press E to go back to main menu", g_vars['width']/2, g_vars['height']/2 + 40, 'center')
+			self.draw_text("Press GREEN to start playing.", g_vars['width']/2, g_vars['height']/2 + 15, 'center')
+			self.draw_text("Press RED to go back to main menu", g_vars['width']/2, g_vars['height']/2 + 40, 'center')
 
 		if self.state == 'PLAYING':
 

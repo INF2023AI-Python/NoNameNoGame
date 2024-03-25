@@ -39,7 +39,7 @@ def program3():
     os.system(sys.executable + " " + os.path.join(current_directory, "frogger", "frogger.py"))
 
 def program4():
-    os.system(sys.executable + " " + os.path.join(current_directory, "frogger", "frogger.py"))
+    os.system(sys.executable + " " + os.path.join(current_directory, "schach", "schach.py"))
 
 
 # Schaltflächen

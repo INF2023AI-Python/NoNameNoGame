@@ -1,17 +1,29 @@
-
 import pygame
 import sys
+import os
+from pygame.locals import *
 
 pygame.init()
 WIDTH = 1024
 HEIGHT = 600
-screen = pygame.display.set_mode([WIDTH, HEIGHT])
+screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.FULLSCREEN)
 pygame.display.set_caption('Schachspiel')
 font = pygame.font.Font('freesansbold.ttf', 20)
 medium_font = pygame.font.Font('freesansbold.ttf', 40)
-big_font = pygame.font.Font('freesansbold.ttf', 30)
+big_font = pygame.font.Font('freesansbold.ttf', 25)
 timer = pygame.time.Clock()
 fps = 60
+
+# Initialisieren des Gamepads
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
+#path
+python_file_path = os.path.abspath(__file__)
+python_file_directory = os.path.dirname(python_file_path)
+os.chdir(python_file_directory)
+
 
 white_pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook',
                  'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']
@@ -92,8 +104,8 @@ def draw_board():
             pygame.draw.rect(screen, 'light gray', [525 - (column * 150), row * 75, 75, 75])
         pygame.draw.rect(screen, 'black', [600, 0, 424, HEIGHT], 5)
         pygame.draw.rect(screen, 'black', [600, 0, 424, 455], 5)
-        status_text = ['Weiß: Wähle eine Figur!', 'Weiß: Ziehe deine Figur!',
-                       'Schwarz: Wähle eine Figur!', 'Schwarz: Ziehe deine Figur!']
+        status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
+                       'Black: Select a Piece to Move!', 'Black: Select a Destination!']
         screen.blit(big_font.render(status_text[turn_step], True, 'black'), (620, 510))
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 75 * i), (600, 75 * i), 2)
@@ -343,15 +355,15 @@ def draw_check():
 
 def menu():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 70])
-    screen.blit(font.render(f'Drücke SPACE um ins Hauptmenü zu gelangen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke ENTER um Weiterzuspielen!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Press GREEN to get in the game overlay!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Press RED to continue to play!', True, 'white'), (210, 240))
 
 
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 110])
-    screen.blit(font.render(f'{winner} hat das Spiel gewonnen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke SPACE zum Neustart!', True, 'white'), (210, 240))
-    screen.blit(font.render(f'Drücke ENTER um ins Hauptmenü zu gelangen!', True, 'white'), (210, 270))
+    screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Press GREEN to play again!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Press RED to get in the game overlay!', True, 'white'), (210, 270))
 
 
 black_options = check_options(black_pieces, black_locations, 'black')
@@ -377,34 +389,41 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        elif event.type == pygame.KEYDOWN and not game_over:
+        if menu_open == 0:
+            if event.type == JOYAXISMOTION:
+                axis = event.axis
+                value = event.value
+                if axis == 0 and abs(value) > 0.5:
+                    if value < 0:
+                        if x_select < 525:
+                            x_select += 75
+                    elif value > 0:
+                         if x_select > 0:
+                            x_select -= 75
+                if axis ==1 and abs(value) > 0.5:
+                    if value < 0:
+                        if y_select < 525:
+                            y_select += 75
+                    elif value > 0:
+                         if y_select > 0:
+                            y_select -= 75  
+        if not game_over:
             if menu_open == 1:
-                if event.key == pygame.K_RETURN:
+                if joystick.get_button(0):
                     menu_open = 0
-                if event.key == pygame.K_SPACE:
+                if joystick.get_button(3):
                     run = False
             else:
-                if event.key == pygame.K_RETURN:
+                if joystick.get_button(0):
                     menu_open = 1
-                if event.key == pygame.K_UP:
-                    if y_select > 0:
-                        y_select -= 75
-                elif event.key == pygame.K_DOWN:
-                    if y_select < 525:
-                        y_select += 75
-                elif event.key == pygame.K_LEFT:
-                    if x_select > 0:
-                        x_select -= 75
-                elif event.key == pygame.K_RIGHT:
-                    if x_select < 525:
-                        x_select += 75   
-                elif event.key == pygame.K_SPACE:
+                
+                elif joystick.get_button(3):
                     x_coord = x_select // 75
                     y_coord = y_select // 75
                     click_coords = (x_coord, y_coord)
                     if turn_step <= 1:
                         if click_coords == (8, 8) or click_coords == (9, 8):
-                            winner = 'Schwarz'
+                            winner = 'Black'
                         if click_coords in white_locations:
                             selection = white_locations.index(click_coords)
                             if turn_step == 0:
@@ -415,7 +434,7 @@ while run:
                                 black_piece = black_locations.index(click_coords)
                                 captured_pieces_white.append(black_pieces[black_piece])
                                 if black_pieces[black_piece] == 'king':
-                                    winner = 'Weiß'
+                                    winner = 'White'
                                 black_pieces.pop(black_piece)
                                 black_locations.pop(black_piece)
                             black_options = check_options(black_pieces, black_locations, 'black')
@@ -427,7 +446,7 @@ while run:
                             valid_moves = []
                     if turn_step > 1:
                         if click_coords == (8, 8) or click_coords == (9, 8):
-                            winner = 'Weiß'
+                            winner = 'White'
                         if click_coords in black_locations:
                             selection = black_locations.index(click_coords)
                             if turn_step == 2:
@@ -438,7 +457,7 @@ while run:
                                 white_piece = white_locations.index(click_coords)
                                 captured_pieces_black.append(white_pieces[white_piece])
                                 if white_pieces[white_piece] == 'king':
-                                    winner = 'Schwarz'
+                                    winner = 'Black'
                                 white_pieces.pop(white_piece)
                                 white_locations.pop(white_piece)
                             black_options = check_options(black_pieces, black_locations, 'black')
@@ -448,8 +467,8 @@ while run:
                             y_select = 450
                             selection = 100
                             valid_moves = []         
-        if event.type == pygame.KEYDOWN and game_over:
-            if event.key == pygame.K_SPACE:
+        elif event.type == pygame.JOYBUTTONDOWN and game_over:
+            if joystick.get_button(3):
                 game_over = False
                 winner = ''
                 white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
@@ -468,7 +487,7 @@ while run:
                 valid_moves = []
                 black_options = check_options(black_pieces, black_locations, 'black')
                 white_options = check_options(white_pieces, white_locations, 'white')
-            if event.key == pygame.K_RETURN:
+            if joystick.get_button(0):
                 run = False
     if turn_step < 2:
         pygame.draw.rect(screen, "red", (x_select, y_select, 75, 75), 5)
