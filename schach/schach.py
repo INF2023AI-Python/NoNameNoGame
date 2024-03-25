@@ -14,6 +14,11 @@ big_font = pygame.font.Font('freesansbold.ttf', 30)
 timer = pygame.time.Clock()
 fps = 60
 
+# Initialisieren des Gamepads
+pygame.joystick.init()
+joystick = pygame.joystick.Joystick(0)
+joystick.init()
+
 #path
 python_file_path = os.path.abspath(__file__)
 python_file_directory = os.path.dirname(python_file_path)
@@ -384,28 +389,28 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        elif event.type == pygame.KEYDOWN and not game_over:
+        elif event.type == pygame.JOYBUTTONDOWN and not game_over:
             if menu_open == 1:
-                if event.key == pygame.K_RETURN:
+                if event.button == 0:
                     menu_open = 0
-                if event.key == pygame.K_SPACE:
+                if event.button == 1:
                     run = False
             else:
-                if event.key == pygame.K_RETURN:
+                if event.button == 0:
                     menu_open = 1
-                if event.key == pygame.K_UP:
+                if joystick.get_axis(0) > 0.9:
                     if y_select > 0:
                         y_select -= 75
-                elif event.key == pygame.K_DOWN:
+                elif joystick.get_axis(0) < 0.9:
                     if y_select < 525:
                         y_select += 75
-                elif event.key == pygame.K_LEFT:
+                elif joystick.get_axis(1) > 0.9:
                     if x_select > 0:
                         x_select -= 75
-                elif event.key == pygame.K_RIGHT:
+                elif joystick.get_axis(1) < 0.9:
                     if x_select < 525:
                         x_select += 75   
-                elif event.key == pygame.K_SPACE:
+                elif event.button == 3:
                     x_coord = x_select // 75
                     y_coord = y_select // 75
                     click_coords = (x_coord, y_coord)
@@ -455,8 +460,8 @@ while run:
                             y_select = 450
                             selection = 100
                             valid_moves = []         
-        if event.type == pygame.KEYDOWN and game_over:
-            if event.key == pygame.K_SPACE:
+        if event.type == pygame.JOYBUTTONDOWN and game_over:
+            if event.button == 3:
                 game_over = False
                 winner = ''
                 white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
@@ -475,7 +480,7 @@ while run:
                 valid_moves = []
                 black_options = check_options(black_pieces, black_locations, 'black')
                 white_options = check_options(white_pieces, white_locations, 'white')
-            if event.key == pygame.K_RETURN:
+            if event.button == 0:
                 run = False
     if turn_step < 2:
         pygame.draw.rect(screen, "red", (x_select, y_select, 75, 75), 5)

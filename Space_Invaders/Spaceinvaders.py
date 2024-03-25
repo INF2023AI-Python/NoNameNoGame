@@ -258,10 +258,8 @@ while running:
                 value = event.value
                 if axis == 1 and abs(value) > 0.5:
                     if value < 0:
-                        print ("1")
                         selected_button = (selected_button + 1) % len(buttons)
                     elif value > 0:
-                        print ("2")
                         selected_button = (selected_button - 1) % len(buttons) 
         elif event.type == pygame.JOYBUTTONDOWN and event.button == 3 :
                 if gameOver != 0:
