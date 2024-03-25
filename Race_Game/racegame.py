@@ -201,15 +201,15 @@ while run:
     elif joystick.get_axis(0) == -1:
         player_car.rotate(left=True)
         
-    if joystick.get_button(1):
+    if joystick.get_button(3):
         moved = True
         player_car.move_forward()
         
-    if joystick.get_button(2):
+    if joystick.get_button(4):
         moved = True
         player_car.move_backward()
 
-    if joystick.get_button(3):
+    if joystick.get_button(1):
         player_car.reset()
 
     if joystick.get_button(0):
