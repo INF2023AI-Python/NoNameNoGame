@@ -10,11 +10,11 @@
 
  > https://www.python.org/downloads/
 
-### 4. Install NoNameNoGame
+### Install NoNameNoGame
   ```
   git clone https://github.com/INF2023AI-Python/Fun-with-Friends.git](https://github.com/INF2023AI-Python/NoNameNoGame.git
   ```
-### 5. Set-up for Autostart
+### Set-up for Autostart
 + Make sure the file is executeable
   ```
   chmod +x /path/to/main.py
