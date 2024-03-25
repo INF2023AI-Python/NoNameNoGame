@@ -38,7 +38,7 @@ Press the green button to start the game
 
 ### Racing Game
 
-Small racing game to improve your own racing skills. Race against the clock and beat your time or that of your friend. In the future, the previous lap and the fastest lap will also be displayed and who knows, several tracks offer even more opportunities to improve.
+Small racing game to improve your own racing skills. Race against the clock and beat your time or that of your friend. In the future, the previous lap and the fastest lap will also be displayed and who knows, several tracks offer even more opportunities to improve. <br>
 How to Play:
 + Use the joystick to move the car left or right
 + Press the green button to move forward
@@ -46,9 +46,9 @@ How to Play:
 + Press the top blue button to reset the car
 
 
-### Space Invader
+### Space Invaders
 
-Shoot some Alienswith your little Spaceship and try not to get shot yourself.
+Shoot some Aliens with your little Spaceship and try not to get shot yourself. <br>
 How to Play:
 + Use the Joystick to move the space ship around
 + It is like you would expect it - left=left, right=right
@@ -56,7 +56,7 @@ How to Play:
 
 ### Frogger
 
-Cross the street without touching the cars and use the logs to cross the water.
+Cross the street without touching the cars and use the logs to cross the water. <br>
 How to Play:
 + Use the Joystick to move the rectangle around
 + It is like you would expect it - top = up, bottom = down, left=left, right=right
