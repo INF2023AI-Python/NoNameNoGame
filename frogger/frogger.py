@@ -66,8 +66,14 @@ class App:
 		if event.type == KEYDOWN and event.key == K_ESCAPE:
 			self.running = False
 
+		if event.type == JOYBUTTONDOWN and event.button == 0:
+			self.running = False
+
 		if self.state == 'START':
 			if event.type == KEYDOWN and event.key == K_RETURN:
+				self.state = 'PLAYING'
+
+			if event.type == JOYBUTTONDOWN and event.button == 3:
 				self.state = 'PLAYING'
 
 		if self.state == 'PLAYING':
