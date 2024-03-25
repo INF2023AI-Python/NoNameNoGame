@@ -211,8 +211,6 @@ while run:
 
     if joystick.get_button(1):
         player_car.reset()
-        player_car.angle = -90
-        player_car.end_time = 0
 
     if joystick.get_button(0):
         pygame.quit()
