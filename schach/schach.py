@@ -397,17 +397,17 @@ while run:
                 if axis == 0 and abs(value) > 0.5:
                     if value < 0:
                         if x_select > 0:
-                            x_select -= 75
+                            x_select += 75
                     elif value > 0:
                          if x_select < 525:
-                            x_select += 75
+                            x_select -= 75
                 if axis ==1 and abs(value) > 0.5:
                     if value < 0:
                         if y_select > 0:
-                            y_select -= 75
+                            y_select += 75
                     elif value > 0:
                          if y_select < 525:
-                            y_select += 75
+                            y_select -= 75
             # if joystick.get_axis(0) > 0.9:
             #     if y_select > 0:
             #         y_select -= 75
