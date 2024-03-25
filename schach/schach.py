@@ -2,6 +2,7 @@
 import pygame
 import sys
 import os
+from pygame.locals import *
 
 pygame.init()
 WIDTH = 1024
@@ -389,6 +390,36 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if menu_open == 0:
+            if event.type == JOYAXISMOTION:
+                axis = event.axis
+                value = event.value
+                if axis == 0 and abs(value) > 0.5:
+                    if value < 0:
+                        if x_select > 0:
+                            x_select -= 75
+                    elif value > 0:
+                         if x_select < 525:
+                            x_select += 75
+                if axis ==1 and abs(value) > 0.5:
+                    if value < 0:
+                        if y_select > 0:
+                            y_select -= 75
+                    elif value > 0:
+                         if y_select < 525:
+                            y_select += 75
+            # if joystick.get_axis(0) > 0.9:
+            #     if y_select > 0:
+            #         y_select -= 75
+            # elif joystick.get_axis(0) < 0.9:
+            #     if y_select < 525:
+            #         y_select += 75
+            # elif joystick.get_axis(1) > 0.9:
+            #     if x_select > 0:
+            #         x_select -= 75
+            # elif joystick.get_axis(1) < 0.9:
+            #     if x_select < 525:
+            #         x_select += 75       
         elif event.type == pygame.JOYBUTTONDOWN and not game_over:
             if menu_open == 1:
                 if event.button == 0:
@@ -398,18 +429,7 @@ while run:
             else:
                 if event.button == 0:
                     menu_open = 1
-                if joystick.get_axis(0) > 0.9:
-                    if y_select > 0:
-                        y_select -= 75
-                elif joystick.get_axis(0) < 0.9:
-                    if y_select < 525:
-                        y_select += 75
-                elif joystick.get_axis(1) > 0.9:
-                    if x_select > 0:
-                        x_select -= 75
-                elif joystick.get_axis(1) < 0.9:
-                    if x_select < 525:
-                        x_select += 75   
+                
                 elif event.button == 3:
                     x_coord = x_select // 75
                     y_coord = y_select // 75
