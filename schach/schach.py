@@ -104,8 +104,8 @@ def draw_board():
             pygame.draw.rect(screen, 'light gray', [525 - (column * 150), row * 75, 75, 75])
         pygame.draw.rect(screen, 'black', [600, 0, 424, HEIGHT], 5)
         pygame.draw.rect(screen, 'black', [600, 0, 424, 455], 5)
-        status_text = ['Weiß: Wähle eine Figur!', 'Weiß: Ziehe deine Figur!',
-                       'Schwarz: Wähle eine Figur!', 'Schwarz: Ziehe deine Figur!']
+        status_text = ['White: Select a Piece to Move!', 'White: Select a Destination!',
+                       'Black: Select a Piece to Move!', 'Black: Select a Destination!']
         screen.blit(big_font.render(status_text[turn_step], True, 'black'), (620, 510))
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 75 * i), (600, 75 * i), 2)
@@ -355,15 +355,15 @@ def draw_check():
 
 def menu():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 70])
-    screen.blit(font.render(f'Drücke GRÜN um ins Hauptmenü zu gelangen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke ROT um Weiterzuspielen!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Press GREEN to get in the game overlay!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Press RED to continue to play!', True, 'white'), (210, 240))
 
 
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 500, 110])
     screen.blit(font.render(f'{winner} hat das Spiel gewonnen!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Drücke GRÜN zum Neustart!', True, 'white'), (210, 240))
-    screen.blit(font.render(f'Drücke ROT um ins Hauptmenü zu gelangen!', True, 'white'), (210, 270))
+    screen.blit(font.render(f'Press RED to play again!!', True, 'white'), (210, 240))
+    screen.blit(font.render(f'Press RED to play again!', True, 'white'), (210, 270))
 
 
 black_options = check_options(black_pieces, black_locations, 'black')
