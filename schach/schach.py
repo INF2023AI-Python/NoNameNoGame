@@ -406,24 +406,12 @@ while run:
                             y_select += 75
                     elif value > 0:
                          if y_select > 0:
-                            y_select -= 75
-            # if joystick.get_axis(0) > 0.9:
-            #     if y_select > 0:
-            #         y_select -= 75
-            # elif joystick.get_axis(0) < 0.9:
-            #     if y_select < 525:
-            #         y_select += 75
-            # elif joystick.get_axis(1) > 0.9:
-            #     if x_select > 0:
-            #         x_select -= 75
-            # elif joystick.get_axis(1) < 0.9:
-            #     if x_select < 525:
-            #         x_select += 75       
-        elif event.type == pygame.JOYBUTTONDOWN and not game_over:
+                            y_select -= 75    
+        elif not game_over:
             if menu_open == 1:
-                if event.button == 0:
+                if joystick.get_button(0):
                     menu_open = 0
-                if event.button == 1:
+                if joystick.get_button(3):
                     run = False
             else:
                 print ("test")
