@@ -1,4 +1,3 @@
-
 import pygame
 import sys
 import os
@@ -427,6 +426,7 @@ while run:
                 if event.button == 1:
                     run = False
             else:
+                print ("test")
                 if joystick.get_button(0):
                     menu_open = 1
                 
