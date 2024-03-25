@@ -468,7 +468,7 @@ while run:
                             y_select = 450
                             selection = 100
                             valid_moves = []         
-        if event.type == pygame.JOYBUTTONDOWN and game_over:
+        elif event.type == pygame.JOYBUTTONDOWN and game_over:
             if event.button == 3:
                 game_over = False
                 winner = ''
