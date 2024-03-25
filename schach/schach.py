@@ -10,7 +10,7 @@ screen = pygame.display.set_mode([WIDTH, HEIGHT], pygame.FULLSCREEN)
 pygame.display.set_caption('Schachspiel')
 font = pygame.font.Font('freesansbold.ttf', 20)
 medium_font = pygame.font.Font('freesansbold.ttf', 40)
-big_font = pygame.font.Font('freesansbold.ttf', 30)
+big_font = pygame.font.Font('freesansbold.ttf', 25)
 timer = pygame.time.Clock()
 fps = 60
 
