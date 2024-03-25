@@ -42,7 +42,7 @@ How to Play:
 PvP Chess Game without en passant, castling and pawn promotion
 
 How to Play: <br>
-+ Use the Joystick to move the rectangle around</li>
++ Use the Joystick to move the rectangle around
 + It is like you would expect it - top = up, bottom = down, left=left, right=right
 + Use the Green Button to select a piece an the destination
 + Use the Red Button to exit the game
